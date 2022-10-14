@@ -1,4 +1,4 @@
-# Express + Mongo + Node <br> Back-end Boilerplate
+# Express + Mongo + Node Back-end Boilerplate
 
 ## Installation
 

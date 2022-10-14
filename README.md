@@ -2,18 +2,18 @@
 
 ## Installation
 
-##### Fork / download the github repository
+##### [] Fork / download the github repository
 
-##### Install node modules ``npm install``
+##### [] Install node modules ``npm install``
 
-##### Set up env variables in ``.env.sample`` 
+##### [] Set up env variables in ``.env.sample`` 
 
-##### Rename the ``.env.sample`` file to ``.env``
+##### [] Rename the ``.env.sample`` file to ``.env``
 
-##### Set up the models in ``/models``
+##### [] Set up the models in ``/models``
 
-##### Set up the controllers in ``/controllers``
+##### [] Set up the controllers in ``/controllers``
 
-##### Update routes in ``server.js``
+##### [] Update routes in ``server.js``
 
-##### Run the project ``npn run build``
+##### [] Run the project ``npn run build``

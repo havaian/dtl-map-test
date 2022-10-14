@@ -7,6 +7,6 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.buildings = require("./building.model.js");
+db.things = require("./thing.model.js");
 
 module.exports = db;

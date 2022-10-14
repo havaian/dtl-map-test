@@ -6,7 +6,7 @@ const db = require("./app/models/index.js");
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
-const controllers = require('./app/controllers/building.controller');
+const controllers = require('./app/controllers/sample.controller');
 
 const app = express();
 var corsOptions = {
@@ -26,28 +26,28 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/get-all-buildings", (req, res) => {
-  controllers.findAllBuildings(req, res);
+app.get("/get-all-things", (req, res) => {
+  controllers.findAllThings(req, res);
 });
  
-app.get("/get-building/:id", (req, res) => {
-  controllers.findOneBuilding(req, res);
+app.get("/get-thing/:id", (req, res) => {
+  controllers.findOneThing(req, res);
 });
 
-app.post('/add-building', (req, res) => {
-  controllers.addOneBuilding(req, res);
+app.post('/add-thing', (req, res) => {
+  controllers.addOneThing(req, res);
 });
 
-app.post("/update-building/:id", (req, res) => {
-  controllers.updateOneBuilding(req, res);
+app.post("/update-thing/:id", (req, res) => {
+  controllers.updateOneThing(req, res);
 });
 
-app.post("/delete-building/:id", (req, res) => {
-  controllers.deleteOneBuilding(req, res);
+app.post("/delete-thing/:id", (req, res) => {
+  controllers.deleteOneThing(req, res);
 });
 
-app.post("/delete-all-buildings", (req, res) => {
-  controllers.deleteAllBuildings(req, res);
+app.post("/delete-all-things", (req, res) => {
+  controllers.deleteAllThings(req, res);
 });
 
 // set port, listen for requests

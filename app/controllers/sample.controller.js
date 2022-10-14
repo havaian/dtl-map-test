@@ -1,15 +1,16 @@
 const db = require('../models');
+const things = db.things;
 
-// Create and Save a new building
-exports.addOneBuilding = (req, res) => {
-    const building = new db.buildings(req.body);
+// Create and Save a new thing
+exports.addSomeThing = (req, res) => {
+    const thing = new things(req.body);
     try {
-        building.save()
+        thing.save()
         .then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not add the building');
+                res.status(400).send('❎ Could not add the thing');
             }
         });
     } catch (err) {
@@ -17,14 +18,14 @@ exports.addOneBuilding = (req, res) => {
     }
 };
 
-// Retrieve all buildings from the database
-exports.findAllBuildings = (req, res) => {
+// Retrieve all things from the database
+exports.findAllThings = (req, res) => {
     try {
-        db.buildings.find().then(result => {
+        things.find().then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ No buildings to show');
+                res.status(400).send('❎ No things to show');
             }
         });
     } catch (err) {
@@ -32,14 +33,14 @@ exports.findAllBuildings = (req, res) => {
     }
 };
 
-// Find a single building with an id
-exports.findOneBuilding = (req, res) => {
+// Find a single thing with an id
+exports.findOneThing = (req, res) => {
     try {
-        db.buildings.findById(req.params.id).then(result => {
+        things.findById(req.params.id).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not find the building');
+                res.status(400).send('❎ Could not find the thing');
             }
         });
     } catch (err) {
@@ -47,14 +48,14 @@ exports.findOneBuilding = (req, res) => {
     }
 };
 
-// Update a building by the id in the request
-exports.updateOneBuilding = (req, res) => {
+// Update a thing by the id in the request
+exports.updateOneThing = (req, res) => {
     try {
-        db.buildings.findByIdAndUpdate(req.params.id, req.body).then(result => {
+        things.findByIdAndUpdate(req.params.id, req.body).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not update the building');
+                res.status(400).send('❎ Could not update the thing');
             }
         });
     } catch (err) {
@@ -62,14 +63,14 @@ exports.updateOneBuilding = (req, res) => {
     }
 };
 
-// Delete a building with the specified id in the request
-exports.deleteOneBuilding = (req, res) => {
+// Delete a thing with the specified id in the request
+exports.deleteOneThing = (req, res) => {
     try {
-        db.buildings.findByIdAndDelete(req.params.id).then(result => {
+        things.findByIdAndDelete(req.params.id).then(result => {
             if (result.length != 0) {
                 res.status(200).send(result);
             } else {
-                res.status(400).send('❎ Could not delete the building');
+                res.status(400).send('❎ Could not delete the thing');
             }
         });
     } catch (err) {
@@ -77,16 +78,16 @@ exports.deleteOneBuilding = (req, res) => {
     }
 };
 
-// Delete all buildings from the database
-exports.deleteAllBuildings = (req, res) => {
+// Delete all things from the database
+exports.deleteAllThings = (req, res) => {
     try {
-        db.buildings.deleteMany().then(result => {
+        things.deleteMany().then(result => {
             if (result.length != 0) {
                 if (result.acknowledged === true) {
                     res.status(200).send(result);
                 }
             } else {
-                res.status(400).send('❎ Could not delete the building');
+                res.status(400).send('❎ Could not delete the thing');
             }
         });
     } catch (err) {

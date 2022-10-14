@@ -2,7 +2,7 @@
 
 ## Installation
 
-##### Fork | download the github repository
+##### Fork / download the github repository
 
 ##### Install node modules ``npm install``
 

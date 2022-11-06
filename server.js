@@ -3,10 +3,26 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./app/models/index.js");
 
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
+const fs = require("fs");
 
-const controllers = require('./app/controllers/sample.controller');
+const regions_dataset = fs.readFileSync('./data/regions/regions_dataset.json', {encoding: 'utf-8'});
+const objects_dataset = fs.readdirSync('./data/objects', {encoding: 'utf-8'});
+// const hexagons_dataset = fs.readdirSync('./data/hexagons', {encoding: 'utf-8'});
+
+const h_7 = fs.readFileSync('./data/hexagons/predict_hexagon_7.json', {encoding: 'utf-8'});
+const h_8 = fs.readFileSync('./data/hexagons/predict_hexagon_8.json', {encoding: 'utf-8'});
+const h_9 = fs.readFileSync('./data/hexagons/predict_hexagon_9.json', {encoding: 'utf-8'});
+
+var objects = [];
+var hexagons = [];
+
+for (let x in objects_dataset) {
+  objects.push(JSON.parse(fs.readFileSync('./data/objects/' + objects_dataset[x], {encoding: 'utf-8'})));
+}
+
+// for (let x in hexagons_dataset) {
+//   hexagons.push(JSON.parse(fs.readFileSync('./data/hexagons/' + hexagons_dataset[x], {encoding: 'utf-8'})));
+// }
 
 const app = express();
 var corsOptions = {
@@ -26,44 +42,63 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/get-all-regions", (req, res) => {
+  try {
+    res.status(200).send(regions_dataset);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 app.get("/get-all-things", (req, res) => {
-  controllers.findAllThings(req, res);
-});
- 
-app.get("/get-thing/:id", (req, res) => {
-  controllers.findOneThing(req, res);
-});
-
-app.post('/add-thing', (req, res) => {
-  controllers.addOneThing(req, res);
+  try {
+    res.status(200).send(objects);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
-app.post("/update-thing/:id", (req, res) => {
-  controllers.updateOneThing(req, res);
+// app.get("/get-all-hexagons", (req, res) => {
+//   try {
+//     res.status(200).send(hexagons);
+//   } catch (err) {
+//     res.status(400).send(err);
+//   }
+// });
+
+app.get("/Hexagon_7", (req, res) => {
+  try {
+    res.status(200).send(h_7);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
-app.post("/delete-thing/:id", (req, res) => {
-  controllers.deleteOneThing(req, res);
+app.get("/Hexagon_8", (req, res) => {
+  try {
+    res.status(200).send(h_8);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
-app.post("/delete-all-things", (req, res) => {
-  controllers.deleteAllThings(req, res);
+app.get("/Hexagon_9", (req, res) => {
+  try {
+    res.status(200).send(h_9);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Port: ${PORT} ✅`);
-});
-
-db.mongoose.connect(db.url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => {
-  console.log("MongoDB ✅");
-})
-.catch(err => {
-  console.log("MongoDB ❌", err);
-  process.exit();
-});
+try { 
+  app.listen(PORT, () => {
+    console.log(`Port: ${PORT} ✅`);
+  });
+} catch (err) {
+  console.log(err);
+  app.listen(PORT++, () => {
+    console.log(`Port: ${PORT} ✅`);
+  });
+}

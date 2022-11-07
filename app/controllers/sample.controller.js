@@ -1,95 +1,58 @@
-const db = require('../models');
-const things = db.things;
+const fs = require("fs");
 
-// Create and Save a new thing
-exports.addSomeThing = (req, res) => {
-    const thing = new things(req.body);
+const regions_dataset = fs.readFileSync('./data/regions/regions_dataset.json', {encoding: 'utf-8'});
+const objects_dataset = fs.readdirSync('./data/objects', {encoding: 'utf-8'});
+
+const h_7 = fs.readFileSync('./data/hexagons/predict_hexagon_7.json', {encoding: 'utf-8'});
+const h_8 = fs.readFileSync('./data/hexagons/predict_hexagon_8.json', {encoding: 'utf-8'});
+const h_9 = fs.readFileSync('./data/hexagons/predict_hexagon_9.json', {encoding: 'utf-8'});
+
+var objects = [];
+
+for (let x in objects_dataset) {
+  objects.push(JSON.parse(fs.readFileSync('./data/objects/' + objects_dataset[x], {encoding: 'utf-8'})));
+}
+
+// Retrieve all regions
+exports.getAllRegions = (req, res) => {
     try {
-        thing.save()
-        .then(result => {
-            if (result.length != 0) {
-                res.status(200).send(result);
-            } else {
-                res.status(400).send('❎ Could not add the thing');
-            }
-        });
+        res.status(200).send(regions_dataset);
     } catch (err) {
         res.status(400).send(err);
     }
 };
 
-// Retrieve all things from the database
-exports.findAllThings = (req, res) => {
+// Retrieve all objects from the database
+exports.getAllObjects = (req, res) => {
     try {
-        things.find().then(result => {
-            if (result.length != 0) {
-                res.status(200).send(result);
-            } else {
-                res.status(400).send('❎ No things to show');
-            }
-        });
+        res.status(200).send(objects);
     } catch (err) {
         res.status(400).send(err);
     }
 };
 
 // Find a single thing with an id
-exports.findOneThing = (req, res) => {
+exports.getH7 = (req, res) => {
     try {
-        things.findById(req.params.id).then(result => {
-            if (result.length != 0) {
-                res.status(200).send(result);
-            } else {
-                res.status(400).send('❎ Could not find the thing');
-            }
-        });
+        res.status(200).send(h_7);
     } catch (err) {
         res.status(400).send(err);
     }
 };
 
 // Update a thing by the id in the request
-exports.updateOneThing = (req, res) => {
+exports.getH8 = (req, res) => {
     try {
-        things.findByIdAndUpdate(req.params.id, req.body).then(result => {
-            if (result.length != 0) {
-                res.status(200).send(result);
-            } else {
-                res.status(400).send('❎ Could not update the thing');
-            }
-        });
+        res.status(200).send(h_8);
     } catch (err) {
         res.status(400).send(err);
     }
 };
 
 // Delete a thing with the specified id in the request
-exports.deleteOneThing = (req, res) => {
+exports.getH9 = (req, res) => {
     try {
-        things.findByIdAndDelete(req.params.id).then(result => {
-            if (result.length != 0) {
-                res.status(200).send(result);
-            } else {
-                res.status(400).send('❎ Could not delete the thing');
-            }
-        });
-    } catch (err) {
-        res.status(400).send(err);
-    }
-};
-
-// Delete all things from the database
-exports.deleteAllThings = (req, res) => {
-    try {
-        things.deleteMany().then(result => {
-            if (result.length != 0) {
-                if (result.acknowledged === true) {
-                    res.status(200).send(result);
-                }
-            } else {
-                res.status(400).send('❎ Could not delete the thing');
-            }
-        });
+    res.status(200).send(h_9);
     } catch (err) {
         res.status(400).send(err);
     }

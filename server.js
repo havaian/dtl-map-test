@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const compression = require('compression');
 
 const main_controllers = require('./app/controllers/main.controller');
 const utils_controllers = require('./app/controllers/utils.controller');
@@ -16,6 +17,9 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// use express gzip compression
+app.use(compression());
 
 app.get("/", (req, res) => {
   res.json({ 

@@ -1,17 +1,27 @@
 const fs = require("fs");
 
-const regions_dataset = fs.readFileSync('./data/regions/regions_dataset.json', {encoding: 'utf-8'});
+const regions_dataset = JSON.parse(fs.readFileSync('./data/regions/regions_dataset.json', {encoding: 'utf-8'}));
 const objects_dataset = fs.readdirSync('./data/objects', {encoding: 'utf-8'});
 
-const h_7 = fs.readFileSync('./data/hexagons/predict_hexagon_7.json', {encoding: 'utf-8'});
-const h_8 = fs.readFileSync('./data/hexagons/predict_hexagon_8.json', {encoding: 'utf-8'});
-const h_9 = fs.readFileSync('./data/hexagons/predict_hexagon_9.json', {encoding: 'utf-8'});
+const object_captions = JSON.parse(fs.readFileSync('./data/captions/object_captions.json', {encoding: 'utf-8'}));
+const haxagon_captions = JSON.parse(fs.readFileSync('./data/captions/hexagon_captions.json', {encoding: 'utf-8'}));
+const region_captions = JSON.parse(fs.readFileSync('./data/captions/region_captions.json', {encoding: 'utf-8'}));
+
+const h_7 = JSON.parse(fs.readFileSync('./data/hexagons/predict_hexagon_7.json', {encoding: 'utf-8'}));
+const h_8 = JSON.parse(fs.readFileSync('./data/hexagons/predict_hexagon_8.json', {encoding: 'utf-8'}));
+const h_9 = JSON.parse(fs.readFileSync('./data/hexagons/predict_hexagon_9.json', {encoding: 'utf-8'}));
 
 var objects = [];
 
 for (let x in objects_dataset) {
   objects.push(JSON.parse(fs.readFileSync('./data/objects/' + objects_dataset[x], {encoding: 'utf-8'})));
 }
+
+regions_dataset.captions = region_captions;
+objects.push(object_captions);
+h_7.captions = haxagon_captions;
+h_8.captions = haxagon_captions;
+h_9.captions = haxagon_captions;
 
 // Retrieve all regions
 exports.getAllRegions = (req, res) => {
